@@ -467,9 +467,9 @@ void L3_send(uint8_t L3_SDU[]){
 	L3_PDU[0] = MMCP_MASTER_ADDRESS; // To: Master
 	L3_PDU[1] = myAddress; // From: device
 	L3_PDU[2] = MMCP_VERSION; // protocol version
-	L3_PDU[4] = 0; // Hops: 0
+	L3_PDU[3] = 0; // Hops: 0
 	for(int i = 0; i < L3_SDU_size; i++){
-		L3_PDU[i+4] = L3_SDU[i];
+		L3_PDU[i+L3_PCI_size] = L3_SDU[i];
 	}
 
 	L2_send(L3_PDU); // L3_PDU = L2_SDU

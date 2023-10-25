@@ -364,7 +364,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 
 /* protocol stack functions begin */
 void L1_receive(uint8_t L1_PDU[]){
-	//memcpy(L1_SDU, L1_PDU+1, L1_SDU_size); // remove first (SOF) and last (EOF) byte from packet to get L1_SDU
+	// remove first (SOF) and last (EOF) byte from packet to get L1_SDU
 	uint8_t L1_SDU[L1_SDU_size] = {0};
 
 	for(int i = 0; i < L1_SDU_size; i++){

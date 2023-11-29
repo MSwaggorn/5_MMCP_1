@@ -154,7 +154,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  //HAL_UART_Receive_IT(&huart2, rx_buf, L1_PDU_size);
+  HAL_UART_Receive_IT(&huart2, rx_buf, L1_PDU_size);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -164,17 +164,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    /*
 	  HAL_UART_Receive_IT(&huart2, rx_buf, L1_PDU_size); // Receive L1_PDU from USART
-
-	  if(rx_complete){ // a packet was received and copied to L1_PDU
-		  rx_complete = 0;
-
-		  L1_receive(L1_PDU); // pass packet to protocol stack
-//newbranch
 		  while(!tx_complete){ // wait for response packet to ensure "one packet in, one packet out" rule; when a packet is discarded, tx_complete is also set
 		  }
 		  tx_complete = 0;
-	  }
+	  } */
 
   }
   /* USER CODE END 3 */
@@ -340,7 +335,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	for(int i = 0; i < L1_PDU_size; i++){ // copy received packet from buffer
 		L1_PDU[i] = rx_buf[i];
 	}
-	rx_complete = 1; // packet received
+
+  L1_receive(L1_PDU); // Pass L1_PDU to protocol stack
+  HAL_UART_Receive_IT(&huart2, rx_buf, L1_PDU_size); // Attach interrupt to receive L1_PDU from USART
 }
 
 // Tx Transfer completed callbacks.

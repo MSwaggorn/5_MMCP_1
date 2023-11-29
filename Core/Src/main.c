@@ -170,7 +170,7 @@ int main(void)
 		  rx_complete = 0;
 
 		  L1_receive(L1_PDU); // pass packet to protocol stack
-
+//newbranch
 		  while(!tx_complete){ // wait for response packet to ensure "one packet in, one packet out" rule; when a packet is discarded, tx_complete is also set
 		  }
 		  tx_complete = 0;
